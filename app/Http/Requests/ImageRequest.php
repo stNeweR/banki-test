@@ -23,7 +23,7 @@ class ImageRequest extends FormRequest
     {
         return [
             'images' => 'required|array|max:10', // Максимум 10 файлов
-            'images.*' => 'file|mimes:jpg,png,jpeg,gif|max:2048', // Ограничение на типы и размер файлов
+            'images.*' => 'file|mimes:jpg,png,gif|max:2048', // Ограничение на типы и размер файлов
         ];
     }
 

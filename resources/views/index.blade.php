@@ -6,7 +6,12 @@
     <div class="flex flex-col items-center justify-center min-h-screen">
         <div class="flex  w-1/2 justify-center flex-col bg-white p-4 rounded-lg shadow-md">
             <h1 class="text-center mb-4 font-bold text-xl">Решение тестового задания</h1>
-            <form action="{{ route('image.store')}}" method="POST" enctype="multipart/form-data" class="flex flex-col gap-4">
+            @if (session('message'))
+                <div class="text-green-500 text-center">
+                    {{ session('message')}}
+                </div>
+            @endsession
+            <form action="{{ route('images.store')}}" method="POST" enctype="multipart/form-data" class="flex flex-col gap-4">
                 @csrf
                 @method('post')
                 <label for="images[]">Выберите файлы которые будем загружать</label>
