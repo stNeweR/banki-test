@@ -8,6 +8,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Image;
 use Illuminate\Support\Str;
+use ZipArchive;
+use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
 {
@@ -75,5 +77,22 @@ class ImageController extends Controller
         }
 
         return redirect()->back()->with('message', 'Фото успешно добавлены');
+    }
+
+    public function downloadZip($image_id)
+    {
+        $image = Image::query()->findOrFail($image_id);
+        $zip = new ZipArchive();
+        $zipFileName = 'photos.zip';
+
+        $tempFile = tempnam(sys_get_temp_dir(), 'zip');
+        $zip->open($tempFile, ZipArchive::CREATE);
+        $imagePath = public_path() . '/storage/images/' . $image->name;
+        $zip->addFile($imagePath, basename($imagePath));
+
+        $zip->close();
+
+        redirect()->route('images.show', $image_id);
+        return response()->download($tempFile, $zipFileName)->deleteFileAfterSend(true);
     }
 }
