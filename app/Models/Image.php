@@ -10,6 +10,14 @@ class Image extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name'
+        'name', 'date', 'time'
     ];
+
+    protected static function boot() {
+        static::creating(function (Image $image) {
+            $image->date = now()->toDateString();
+            $image->time = now()->format('H:i');
+        });
+        parent::boot();
+    }
 }

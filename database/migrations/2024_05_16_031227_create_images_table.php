@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
 
             $table->string('name')->unique();
+            $table->date('date');
+            $table->time('time');
 
             $table->timestamps();
         });

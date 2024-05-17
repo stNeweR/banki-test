@@ -2,24 +2,38 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImageFilterRequest;
 use App\Http\Requests\ImageRequest;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Image;
 use Illuminate\Support\Str;
 
 class ImageController extends Controller
 {
-
-    public function index()
+    public function index(ImageFilterRequest $request)
     {
-        $images = Image::all();
+        $query = Image::query();
 
-        if ($images->isEmpty()) {
-            abort(404);
+        if ($request->has('name') && !empty($request->name)) {
+            $name = Str::slug($request->name, '-');
+            $query->where('name' , 'like', '%' . $name . '%');
         }
 
+        if ($request->has('date') && !empty($request->date)) {
+            $query->where('date', $request->date);
+        }
+
+        if ($request->has('time') && !empty($request->time)) {
+            $time = Carbon::parse($request->time)->toTimeString();
+            $query->where('time', $time);
+        }
+
+        $images = $query->get();
+
         return view('images.index', [
-            'images' => $images
+            'images' => $images,
+            'filters' => $request->all()
         ]);
     }
 
