@@ -14,7 +14,7 @@
             <a href="{{ route('images.index') }}">Посмотреть все фотографии</a>
         </div>
     </header>
-    <div class="md:container md:mx-auto">
+    <div class="md:container md:mx-auto pb-4">
         @yield('page')
     </div>
     @stack('scripts')

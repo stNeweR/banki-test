@@ -23,7 +23,7 @@
                         <td class="py-1 px-2 border-gray-700 border-t border-l">{{ $image->created_at->format('d.m.Y') }}</td>
                         <td class="py-1 px-2 border-gray-700 border-t border-l">{{ $image->created_at->format('H:i:s') }}</td>
                         <td class="py-1 px-2 border-gray-700 border-t border-l"><a href="#" id="open-popup" data-path={{ asset('storage/images/' . $image->name) }}>Посмотреть</a></td>
-                        <td class="py-1 px-2 border-gray-700 border-t border-l"><a href="">Открыть полностью</a></td>
+                        <td class="py-1 px-2 border-gray-700 border-t border-l"><a href="{{ route('images.show', $image->id) }}">Открыть полностью</a></td>
                     </tr>
                 @endforeach
             </tbody>

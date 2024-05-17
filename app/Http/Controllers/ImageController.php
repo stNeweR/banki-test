@@ -22,6 +22,16 @@ class ImageController extends Controller
             'images' => $images
         ]);
     }
+
+    public function show($image_id)
+    {
+        $image = Image::query()->findOrFail($image_id);
+
+        return view('images.show', [
+            'image' => $image
+        ]);
+    }
+
     public function store(ImageRequest $request)
     {
         if (!$request->hasFile('images')) {
